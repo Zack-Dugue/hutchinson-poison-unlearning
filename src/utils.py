@@ -462,7 +462,8 @@ class HutchinsonParameterPerturber:
         label_free=False,
         x_D=False,
 
-    ):
+    ):  
+        self.opt = opt
         self.model = model.to(device)
         self.optim = AdaHessian(model.parameters(),lr=.01,n_samples=4)
         self.device = "cpu"
@@ -479,8 +480,8 @@ class HutchinsonParameterPerturber:
         self.min_layer = -1
         self.max_layer = -1
         self.forget_threshold = 1  # unused
-        self.dampening_constant = "Adaptive"  # parameters["dampening_constant"]
-        self.selection_weighting = "Adaptive"  # parameters["selection_weighting"]
+        self.dampening_constant = parameters["dampening_constant"]
+        self.selection_weighting = parameters["selection_weighting"]
 
     def get_layer_num(self, layer_name: str) -> int:
         layer_id = layer_name.split(".")[1]
@@ -522,38 +523,19 @@ class HutchinsonParameterPerturber:
         importances = self.zerolike_params_dict(self.model)
         for epoch in range(epochs):
             for x, y, idx in dataloader:
+                self.optim.zero_grad()
                 x, y = x.to(self.device), y.to(self.device)
-
-                if extra_noise:
-                    print("NOISE IS ON")
-                    # add torch rand x% noise
-                    x += torch.randn_like(x) * 0.01
-
-
                 out = self.model(x)
-
-                if self.label_free:
-                    if self.x_D:
-                        # loss = torch.abs(out).sum(dim=1).mean() # L1
-                        # loss = torch.norm(out, p="fro", dim=1).abs().mean() # prev
-                        loss = torch.norm(out, p="fro", dim=1).abs().mean()
-                    else:  # original
-                        # loss = torch.norm(out, p="fro", dim=1).abs().mean()
-                        loss = torch.norm(out, p="fro", dim=1).pow(2).mean()  # actual one
-                        # loss = (torch.norm(out, p="fro", dim=1).pow(2).mean())  # original is pow(2) not abs -> l2 vs l1 norm
-                else:
-                    loss = criterion(out, y)
-
+                loss = criterion(out, nn.functional.sigmoid(out))
                 loss.backward(create_graph=True)
                 self.optim.set_hessian()
-
-
-        for (k1, p), (k2, imp) in zip(
-                self.model.named_parameters(), importances.items()
-        ):
-            if p.hess is not None:
-                if self.label_free:
-                    imp.data += p.grad.data / epochs
+                
+        with torch.no_grad():
+            for (k1, p), (k2, imp) in zip(
+                    self.model.named_parameters(), importances.items()
+            ):
+                if p.hess is not None:
+                    imp.data += p.hess.data / (epochs*len(dataloader))
         return importances
 
     def modify_weight(
@@ -687,6 +669,7 @@ class HutchinsonParameterPerturber:
                         p[locations] = p[locations].mul(update)
 
         else:  # vanilla SSD
+            numel = 0
             with torch.no_grad():
                 for (n, p), (oimp_n, oimp), (fimp_n, fimp) in zip(
                     self.model.named_parameters(),
@@ -694,9 +677,11 @@ class HutchinsonParameterPerturber:
                     forget_importance.items(),
                 ):
                     # Synapse Selection with parameter alpha
-                    oimp_norm = oimp.mul(self.selection_weighting)
+                    fimp = -1*fimp
+                    oimp_norm = -1*oimp.mul(self.selection_weighting)
                     locations = torch.where(fimp > oimp_norm)
-
+                    print(torch.mean(fimp), torch.median(fimp), torch.mean(oimp_norm), torch.median(oimp_norm))
+                    numel+=locations[0].numel()/fimp.numel()
                     # Synapse Dampening with parameter lambda
                     weight = ((oimp.mul(self.dampening_constant)).div(fimp)).pow(
                         self.exponent
@@ -706,6 +691,7 @@ class HutchinsonParameterPerturber:
                     min_locs = torch.where(update > self.lower_bound)
                     update[min_locs] = self.lower_bound
                     p[locations] = p[locations].mul(update)
+            print(numel)
 
 def ssd_tuning(
     model,

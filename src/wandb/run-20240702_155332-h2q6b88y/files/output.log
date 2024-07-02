@@ -1,0 +1,20 @@
+/usr/local/lib/python3.8/dist-packages/torch/autograd/__init__.py:251: UserWarning: Using backward() with create_graph=True will create a reference cycle between the parameter and its gradient which can cause a memory leak. We recommend using autograd.grad when creating the graph to avoid this. If you have to use this function, make sure to reset the .grad fields of your parameters to None after use to break the cycle and avoid the leak. (Triggered internally at ../torch/csrc/autograd/engine.cpp:1171.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Traceback (most recent call last):
+  File "main.py", line 342, in <module>
+    method.unlearn(
+  File "/tf/notebooks/src/methods.py", line 471, in unlearn
+    self.best_model = ssd_tuning(
+  File "/tf/notebooks/src/utils.py", line 741, in ssd_tuning
+    original_importances = pdr.calc_importance(full_train_dl)
+  File "/tf/notebooks/src/utils.py", line 549, in calc_importance
+    self.optim.set_hessian()
+  File "/usr/local/lib/python3.8/dist-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/tf/notebooks/src/ada_hessian.py", line 84, in set_hessian
+    h_zs = torch.autograd.grad(grads, params, grad_outputs=zs, only_inputs=True, retain_graph=i < self.n_samples - 1)
+  File "/usr/local/lib/python3.8/dist-packages/torch/autograd/__init__.py", line 394, in grad
+    result = Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 128.00 MiB. GPU 0 has a total capacty of 23.65 GiB of which 36.62 MiB is free. Process 3267737 has 17.71 GiB memory in use. Process 3280854 has 5.88 GiB memory in use. Of the allocated memory 4.67 GiB is allocated by PyTorch, and 742.09 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+We are in the hessian stuff
+We are in the hessian stuff

@@ -1,0 +1,1 @@
+{"method time": 44.850116307, "dataset": "CIFAR10", "forget_size": 500, "deletion_size": 250, "p_cut": 0.0, "_timestamp": 1719936290.560691, "_runtime": 44.88682222366333, "_step": 0, "_wandb": {"runtime": 44}}

@@ -1,0 +1,111 @@
+/usr/local/lib/python3.8/dist-packages/torch/autograd/__init__.py:251: UserWarning: Using backward() with create_graph=True will create a reference cycle between the parameter and its gradient which can cause a memory leak. We recommend using autograd.grad when creating the graph to avoid this. If you have to use this function, make sure to reset the .grad fields of your parameters to None after use to break the cycle and avoid the leak. (Triggered internally at ../torch/csrc/autograd/engine.cpp:1171.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+Traceback (most recent call last):
+  File "main.py", line 342, in <module>
+    method.unlearn(
+  File "/tf/notebooks/src/methods.py", line 471, in unlearn
+    self.best_model = ssd_tuning(
+  File "/tf/notebooks/src/utils.py", line 742, in ssd_tuning
+    pdr.modify_weight(original_importances, sample_importances)
+  File "/tf/notebooks/src/utils.py", line 701, in modify_weight
+    numel+=locations.numel()
+AttributeError: 'tuple' object has no attribute 'numel'
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff

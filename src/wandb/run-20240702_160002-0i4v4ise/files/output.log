@@ -1,0 +1,135 @@
+/usr/local/lib/python3.8/dist-packages/torch/autograd/__init__.py:251: UserWarning: Using backward() with create_graph=True will create a reference cycle between the parameter and its gradient which can cause a memory leak. We recommend using autograd.grad when creating the graph to avoid this. If you have to use this function, make sure to reset the .grad fields of your parameters to None after use to break the cycle and avoid the leak. (Triggered internally at ../torch/csrc/autograd/engine.cpp:1171.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+We are in the hessian stuff
+tensor(2.3931, device='cuda:0') tensor(2.7516, device='cuda:0') tensor(-4956.4048, device='cuda:0') tensor(-3085.1084, device='cuda:0')
+tensor(-17.1086, device='cuda:0') tensor(-2.4078, device='cuda:0') tensor(-4451.7021, device='cuda:0') tensor(-2467.0784, device='cuda:0')
+tensor(-7.0968, device='cuda:0') tensor(-9.7423, device='cuda:0') tensor(-672.0007, device='cuda:0') tensor(-747.2487, device='cuda:0')
+tensor(4.5759, device='cuda:0') tensor(3.4447, device='cuda:0') tensor(-620.6736, device='cuda:0') tensor(-45.2893, device='cuda:0')
+tensor(0.0497, device='cuda:0') tensor(0.0641, device='cuda:0') tensor(-81.9066, device='cuda:0') tensor(-66.3538, device='cuda:0')
+tensor(-0.0743, device='cuda:0') tensor(4.7837, device='cuda:0') tensor(-1399.5288, device='cuda:0') tensor(-1198.8524, device='cuda:0')
+tensor(-3.1611, device='cuda:0') tensor(-3.9175, device='cuda:0') tensor(-531.5024, device='cuda:0') tensor(-515.5228, device='cuda:0')
+tensor(-8.5140, device='cuda:0') tensor(-13.1791, device='cuda:0') tensor(-606.8718, device='cuda:0') tensor(-453.6769, device='cuda:0')
+tensor(-0.1648, device='cuda:0') tensor(-0.0766, device='cuda:0') tensor(-163.4620, device='cuda:0') tensor(-150.3540, device='cuda:0')
+tensor(-7.3544, device='cuda:0') tensor(-7.5191, device='cuda:0') tensor(-1376.7556, device='cuda:0') tensor(-1880.2310, device='cuda:0')
+tensor(3.8010, device='cuda:0') tensor(1.8389, device='cuda:0') tensor(-156.2521, device='cuda:0') tensor(-133.2650, device='cuda:0')
+tensor(1.1753, device='cuda:0') tensor(0.4981, device='cuda:0') tensor(-321.4510, device='cuda:0') tensor(-360.2008, device='cuda:0')
+tensor(0.1107, device='cuda:0') tensor(0.0774, device='cuda:0') tensor(-181.8480, device='cuda:0') tensor(-170.0163, device='cuda:0')
+tensor(-14.4567, device='cuda:0') tensor(-15.9741, device='cuda:0') tensor(-1380.5322, device='cuda:0') tensor(-1476.7700, device='cuda:0')
+tensor(-1.2476, device='cuda:0') tensor(-1.6627, device='cuda:0') tensor(-279.0518, device='cuda:0') tensor(-295.7861, device='cuda:0')
+tensor(0.9176, device='cuda:0') tensor(1.3025, device='cuda:0') tensor(-227.1791, device='cuda:0') tensor(-551.4654, device='cuda:0')
+tensor(0.0742, device='cuda:0') tensor(-0.0115, device='cuda:0') tensor(-86.7760, device='cuda:0') tensor(-80.4322, device='cuda:0')
+tensor(-1.5437, device='cuda:0') tensor(-2.7342, device='cuda:0') tensor(-337.1421, device='cuda:0') tensor(-478.8926, device='cuda:0')
+tensor(-3.3834, device='cuda:0') tensor(-5.5581, device='cuda:0') tensor(49.1188, device='cuda:0') tensor(-10.5079, device='cuda:0')
+tensor(1.2292, device='cuda:0') tensor(2.9903, device='cuda:0') tensor(-248.6905, device='cuda:0') tensor(-341.7123, device='cuda:0')
+tensor(0.0759, device='cuda:0') tensor(0.0538, device='cuda:0') tensor(-113.6551, device='cuda:0') tensor(-105.5735, device='cuda:0')
+tensor(0.0270, device='cuda:0') tensor(2.5638, device='cuda:0') tensor(-408.9406, device='cuda:0') tensor(-413.9938, device='cuda:0')
+tensor(-0.3018, device='cuda:0') tensor(-0.7471, device='cuda:0') tensor(-22.5179, device='cuda:0') tensor(-65.2126, device='cuda:0')
+tensor(0.9462, device='cuda:0') tensor(-2.7469, device='cuda:0') tensor(-120.7807, device='cuda:0') tensor(-98.8206, device='cuda:0')
+tensor(-0.0288, device='cuda:0') tensor(-0.0414, device='cuda:0') tensor(-36.1011, device='cuda:0') tensor(-35.4958, device='cuda:0')
+tensor(-0.2683, device='cuda:0') tensor(-2.5198, device='cuda:0') tensor(-261.8253, device='cuda:0') tensor(-254.5293, device='cuda:0')
+tensor(3.4827, device='cuda:0') tensor(2.6520, device='cuda:0') tensor(18.9849, device='cuda:0') tensor(46.9515, device='cuda:0')
+tensor(0.4853, device='cuda:0') tensor(0.5481, device='cuda:0') tensor(-39.0391, device='cuda:0') tensor(-32.4815, device='cuda:0')
+tensor(0.1078, device='cuda:0') tensor(0.0851, device='cuda:0') tensor(15.7498, device='cuda:0') tensor(12.5780, device='cuda:0')
+tensor(0.4849, device='cuda:0') tensor(2.3480, device='cuda:0') tensor(156.4878, device='cuda:0') tensor(152.7918, device='cuda:0')
+tensor(-0.3697, device='cuda:0') tensor(-3.7970, device='cuda:0') tensor(-203.0610, device='cuda:0') tensor(-276.9238, device='cuda:0')
+tensor(-0.2540, device='cuda:0') tensor(1.6315, device='cuda:0') tensor(-43.8281, device='cuda:0') tensor(0.6369, device='cuda:0')
+tensor(0.9936, device='cuda:0') tensor(-2.3984, device='cuda:0') tensor(268.2850, device='cuda:0') tensor(283.3354, device='cuda:0')
+18.998558033130784

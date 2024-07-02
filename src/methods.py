@@ -480,6 +480,18 @@ class SSD(ApplyK):
         return
 
     def get_save_prefix(self):
+        # self.unlearn_file_prefix = (
+        #     self.opt.pretrain_file_prefix
+        #     + "/"
+        #     + str(self.opt.deletion_size)
+        #     + "_"
+        #     + self.opt.unlearn_method
+        #     + "_"
+        #     + self.opt.exp_name
+        # )
+        # self.unlearn_file_prefix += (
+        #     "_" + str(self.opt.train_iters) + "_" + str(self.opt.k)
+        # )
         self.unlearn_file_prefix = (
             self.opt.pretrain_file_prefix
             + "/"
