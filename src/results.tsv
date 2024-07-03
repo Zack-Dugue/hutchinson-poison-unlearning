@@ -1,4 +1,5 @@
 	dataset	model	dataset_method	forget_set_size	patch_size	pretrain_iters	pretrain_lr	extra	unlearn_method	exp_name	train_iters	k	factor	kd_T	gamma	alpha	msteps	delete_acc	delete_err	manip_acc	test_acc	manip_clean_acc	test_clean_acc	test_retain_acc	deletion_size	SSDdampening	selectwt	unlearn_time	train_clean_acc
-0	CIFAR10	resnet9	poisoning	500	3	4000	0.025	0.0	SSD	unlearn	99	-1						0.128	0.0	0.1	0.0963	0.088	0.0956		250	1.0	10.0	44.13299756	0.09838
-1	CIFAR10	resnet9	poisoning	500	3	4000	0.025	0.0	SSD	unlearn	99	-1						0.084	1.0	0.1	0.1	0.102	0.1		250	1.0	25.0	44.850034088	0.1
-2	CIFAR10	resnet9	poisoning	500	3	4000	0.025	0.0	Naive	pretrainmodel								0.0	101.0	0.152	0.1503	0.882	0.9116		0			86.36595032599998	0.99636
+0	CIFAR10	resnet9	poisoning	500	3	4000	0.025	0.0	SSD	unlearn	99	-1						0.084	1.0	0.1	0.1	0.102	0.1		250	1.0	10.0	15.342798918	0.1
+1	CIFAR10	resnet9	poisoning	500	3	4000	0.025	0.0	SSD	unlearn	99	-1						0.084	1.0	0.1	0.1	0.102	0.1		250	1.0	1.0	15.269634987999998	0.1
+2	CIFAR10	resnet9	poisoning	500	3	4000	0.025	0.0	SSD	unlearn	99	-1						0.084	1.0	0.1	0.0997	0.102	0.0997		250	1.0	1000.0	1001.5579226980001	0.09968
+3	CIFAR10	resnet9	poisoning	500	3	4000	0.025	0.0	Naive	pretrainmodel								0.0	101.0	0.152	0.1503	0.882	0.9116		0			86.36595032599998	0.99636

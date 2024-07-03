@@ -109,7 +109,8 @@ class ParameterPerturber_old:
         None
 
         """
-
+        numel = 0
+        counter = 0
         with torch.no_grad():
             for (n, p), (oimp_n, oimp), (fimp_n, fimp) in zip(
                 self.model.named_parameters(),
@@ -117,9 +118,11 @@ class ParameterPerturber_old:
                 forget_importance.items(),
             ):
                 # Synapse Selection with parameter alpha
+
                 oimp_norm = oimp.mul(self.selection_weighting)
                 locations = torch.where(fimp > oimp_norm)
-
+                numel+=locations[0].numel()
+                counter += fimp.numel()
                 # Synapse Dampening with parameter lambda
                 weight = ((oimp.mul(self.dampening_constant)).div(fimp)).pow(
                     self.exponent
@@ -129,6 +132,7 @@ class ParameterPerturber_old:
                 min_locs = torch.where(update > self.lower_bound)
                 update[min_locs] = self.lower_bound
                 p[locations] = p[locations].mul(update)
+        print(f"fraction of elements edited: {numel/counter}")
 
 
 # set random seeds for random, numpy and torch
@@ -465,7 +469,7 @@ class HutchinsonParameterPerturber:
     ):  
         self.opt = opt
         self.model = model.to(device)
-        self.optim = AdaHessian(model.parameters(),lr=.01,n_samples=4)
+        self.optim = AdaHessian(model.parameters(),lr=.01,n_samples=1)
         self.device = "cpu"
         self.alpha = parameters["selection_weighting"]
         self.xmin = None
@@ -482,6 +486,7 @@ class HutchinsonParameterPerturber:
         self.forget_threshold = 1  # unused
         self.dampening_constant = parameters["dampening_constant"]
         self.selection_weighting = parameters["selection_weighting"]
+        self.grad_sq = []
 
     def get_layer_num(self, layer_name: str) -> int:
         layer_id = layer_name.split(".")[1]
@@ -521,13 +526,22 @@ class HutchinsonParameterPerturber:
         self.optim.zero_grad()
         criterion = nn.CrossEntropyLoss()
         importances = self.zerolike_params_dict(self.model)
+        grad_sq = self.zerolike_params_dict(self.model)
         for epoch in range(epochs):
             for x, y, idx in dataloader:
                 self.optim.zero_grad()
                 x, y = x.to(self.device), y.to(self.device)
                 out = self.model(x)
-                loss = criterion(out, nn.functional.sigmoid(out))
+                y_hat_dist = torch.distributions.categorical.Categorical(logits=out)
+                y_hat = nn.functional.one_hot(y_hat_dist.sample(), num_classes=out.size(-1)).float()
+                loss = criterion(out,y)
                 loss.backward(create_graph=True)
+                with torch.no_grad():
+                    for (k1, p), (k2, g_sq) in zip(
+                            self.model.named_parameters(), grad_sq.items()
+                    ):
+                        if p.grad is not None:
+                            g_sq.data += (p.grad.data)**2 / (epochs*len(dataloader))
                 self.optim.set_hessian()
                 
         with torch.no_grad():
@@ -536,6 +550,7 @@ class HutchinsonParameterPerturber:
             ):
                 if p.hess is not None:
                     imp.data += p.hess.data / (epochs*len(dataloader))
+        self.grad_sq.append(grad_sq)
         return importances
 
     def modify_weight(
@@ -670,18 +685,32 @@ class HutchinsonParameterPerturber:
 
         else:  # vanilla SSD
             numel = 0
+            num_f_neg = 0
+            num_o_neg = 0
+            counter = 0
+            print(f"selection weighting: {self.selection_weighting}")
             with torch.no_grad():
-                for (n, p), (oimp_n, oimp), (fimp_n, fimp) in zip(
+                for (n, p), (oimp_n, oimp), (fimp_n, fimp), (ograd_sq_n, ograd_sq), (fgrad_sq_n,fgrad_sq) in zip(
                     self.model.named_parameters(),
                     original_importance.items(),
                     forget_importance.items(),
+                    self.grad_sq[1].items(),
+                    self.grad_sq[0].items()
                 ):
                     # Synapse Selection with parameter alpha
-                    fimp = -1*fimp
-                    oimp_norm = -1*oimp.mul(self.selection_weighting)
+                    fimp = 1*fimp
+                    oimp_norm = torch.min(1*oimp.mul(self.selection_weighting),torch.zeros_like(oimp))
                     locations = torch.where(fimp > oimp_norm)
-                    print(torch.mean(fimp), torch.median(fimp), torch.mean(oimp_norm), torch.median(oimp_norm))
-                    numel+=locations[0].numel()/fimp.numel()
+                    where_neg = torch.where(fimp < 0)
+                    num_f_neg += where_neg[0].numel()
+                    where_neg = torch.where(oimp < 0)
+                    num_o_neg += where_neg[0].numel()
+                    
+                    print(f"\n {n}")
+                    print(f"FISCHER INFO MAT:  forget_mean={torch.mean(fgrad_sq).item()} \t retain_mean={torch.mean(ograd_sq).item()} \t forget_std={torch.std(fgrad_sq).item()}\t retain_std={torch.std(ograd_sq).item()}")
+                    print(f"HESSIAN         : forget_mean={torch.mean(fimp).item()} \t retain_mean={torch.mean(oimp).item()} \t forget_std={torch.std(fimp).item()}\t retain_std={torch.std(oimp).item()}")
+                    numel+=locations[0].numel()
+                    counter += fimp.numel()
                     # Synapse Dampening with parameter lambda
                     weight = ((oimp.mul(self.dampening_constant)).div(fimp)).pow(
                         self.exponent
@@ -691,7 +720,10 @@ class HutchinsonParameterPerturber:
                     min_locs = torch.where(update > self.lower_bound)
                     update[min_locs] = self.lower_bound
                     p[locations] = p[locations].mul(update)
-            print(numel)
+            print(f"fraction of parameters modified: {numel/counter}")
+            print(f"fraction of parameters with negative o hessian: {num_o_neg/counter}")
+            print(f"fraction of parameters with negative f hessian: {num_f_neg/counter}")
+
 
 def ssd_tuning(
     model,
@@ -713,7 +745,7 @@ def ssd_tuning(
     }
 
     # load the trained model
-    optimizer = torch.optim
+    optimizer = torch.optim.SGD(model.parameters(), lr=.01)
 
     # pdr = ParameterPerturber_old(model, optimizer, device, parameters)
     pdr = HutchinsonParameterPerturber(model,optimizer,device, parameters)
